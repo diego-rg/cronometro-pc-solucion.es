@@ -55,22 +55,25 @@ const App = () => {
 
   return (
     <div>
-      <h3>React Stopwatch</h3>
-      <div>
-        <p>{formatTime()}</p>
+      <main>
+        <h1>Cronómetro</h1>
         <div>
-          {!isActive && !isPaused ? (
-            <button onClick={handleStart}>Iniciar</button>
-          ) : isPaused ? (
-            <button onClick={handlePause}>Pausar</button>
-          ) : (
-            <button onClick={handleResume}>Continuar</button>
-          )}
-          <button onClick={handleReset} disabled={!isActive}>
-            Reiniciar
-          </button>
+          <p>{formatTime()}</p>
+          <div>
+            {!isActive && !isPaused ? (
+              <button onClick={handleStart}>Iniciar</button>
+            ) : isPaused ? (
+              <button onClick={handlePause}>Pausar</button>
+            ) : (
+              <button onClick={handleResume}>Continuar</button>
+            )}
+            <button onClick={handleReset} disabled={!isActive}>
+              Reiniciar
+            </button>
+          </div>
         </div>
-      </div>
+      </main>
+      <footer> © 2013 - 2022 PC-Solución.</footer>
     </div>
   );
 };
