@@ -55,7 +55,7 @@ const App = () => {
 
   //Actualizar title:
   useEffect(() => {
-    document.title = formatTime();
+    document.title = `${formatTime()} | PC-Solución | Cronómetro`;
   }, [formatTime]);
 
   return (
