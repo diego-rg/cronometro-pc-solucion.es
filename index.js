@@ -53,6 +53,11 @@ const App = () => {
     return `${getHours} : ${getMinutes} : ${getSeconds}`;
   };
 
+  //Actualizar title:
+  useEffect(() => {
+    document.title = formatTime();
+  }, [formatTime]);
+
   return (
     <div>
       <main>
