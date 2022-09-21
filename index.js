@@ -43,16 +43,32 @@ const App = () => {
     setTimer(0);
   };
 
+  //Formato HH:MM:SS
+  const formatTime = () => {
+    const getSeconds = `0${timer % 60}`.slice(-2);
+    const minutes = `${Math.floor(timer / 60)}`;
+    const getMinutes = `0${minutes % 60}`.slice(-2);
+    const getHours = `0${Math.floor(timer / 3600)}`.slice(-2);
+
+    return `${getHours} : ${getMinutes} : ${getSeconds}`;
+  };
+
   return (
     <div>
       <h3>React Stopwatch</h3>
-      <div className="stopwatch-card">
-        <p>{timer}</p> {/* here we will show timer */}
-        <div className="buttons">
-          <button onClick={handleStart}>Iniciar</button>
-          <button onClick={handlePause}>Pausar</button>
-          <button onClick={handleResume}>Continuar</button>
-          <button onClick={handleReset}>Reiniciar</button>
+      <div>
+        <p>{formatTime()}</p>
+        <div>
+          {!isActive && !isPaused ? (
+            <button onClick={handleStart}>Iniciar</button>
+          ) : isPaused ? (
+            <button onClick={handlePause}>Pausar</button>
+          ) : (
+            <button onClick={handleResume}>Continuar</button>
+          )}
+          <button onClick={handleReset} disabled={!isActive}>
+            Reiniciar
+          </button>
         </div>
       </div>
     </div>
