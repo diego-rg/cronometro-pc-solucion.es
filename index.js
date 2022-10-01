@@ -16,9 +16,12 @@ const App = () => {
   const handleStart = () => {
     setIsActive(true);
     setIsPaused(true);
+    const start = Date.now();
     countRef.current = setInterval(() => {
-      setTimer((timer) => timer + 1);
-    }, 1000);
+      const diff = Date.now() - start;
+      const formatDiff = Math.floor(diff / 10);
+      setTimer(formatDiff);
+    }, 10);
   };
 
   //Pausar
@@ -30,9 +33,12 @@ const App = () => {
   //Continuar
   const handleResume = () => {
     setIsPaused(true);
+    const start = Date.now();
     countRef.current = setInterval(() => {
-      setTimer((timer) => timer + 1);
-    }, 1000);
+      const diff = Date.now() - start;
+      const formatDiff = Math.floor(diff / 10) + timer;
+      setTimer(formatDiff);
+    }, 10);
   };
 
   //Reiniciar
@@ -55,7 +61,7 @@ const App = () => {
 
   //Actualizar title:
   useEffect(() => {
-    document.title = `${formatTime()} | PC-Solución | Cronómetro`;
+    document.title = formatTime();
   }, [formatTime]);
 
   return (
@@ -63,7 +69,7 @@ const App = () => {
       <main>
         <h1>Cronómetro</h1>
         <div>
-          <p>{formatTime()}</p>
+          <p>{timer}</p>
           <div>
             {!isActive && !isPaused ? (
               <button onClick={handleStart}>Iniciar</button>
