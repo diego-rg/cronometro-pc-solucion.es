@@ -19,9 +19,8 @@ const App = () => {
     const start = Date.now();
     countRef.current = setInterval(() => {
       const diff = Date.now() - start;
-      const formatDiff = Math.floor(diff / 10);
-      setTimer(formatDiff);
-    }, 10);
+      setTimer(diff);
+    }, 1);
   };
 
   //Pausar
@@ -35,10 +34,9 @@ const App = () => {
     setIsPaused(true);
     const start = Date.now();
     countRef.current = setInterval(() => {
-      const diff = Date.now() - start;
-      const formatDiff = Math.floor(diff / 10) + timer;
-      setTimer(formatDiff);
-    }, 10);
+      const diff = Date.now() - start + timer;
+      setTimer(diff);
+    }, 1);
   };
 
   //Reiniciar
@@ -49,14 +47,20 @@ const App = () => {
     setTimer(0);
   };
 
-  //Formato HH:MM:SS
+  //Formato HH:MM:SS:MS
   const formatTime = () => {
-    const getSeconds = `0${timer % 60}`.slice(-2);
-    const minutes = `${Math.floor(timer / 60)}`;
-    const getMinutes = `0${minutes % 60}`.slice(-2);
-    const getHours = `0${Math.floor(timer / 3600)}`.slice(-2);
+    const getMiliseconds = Math.floor((timer % 1000) / 10);
+    const getSeconds = Math.floor((timer / 1000) % 60);
+    const getMinutes = Math.floor((timer / (1000 * 60)) % 60);
+    const getHours = Math.floor((timer / (1000 * 60 * 60)) % 24);
 
-    return `${getHours} : ${getMinutes} : ${getSeconds}`;
+    const miliseconds =
+      getMiliseconds < 10 ? "0" + getMiliseconds : getMiliseconds;
+    const hours = getHours < 10 ? "0" + getHours : getHours;
+    const minutes = getMinutes < 10 ? "0" + getMinutes : getMinutes;
+    const seconds = getSeconds < 10 ? "0" + getSeconds : getSeconds;
+
+    return `${hours} : ${minutes} : ${seconds} : ${miliseconds}`;
   };
 
   //Actualizar title:
@@ -69,7 +73,7 @@ const App = () => {
       <main>
         <h1>Cronómetro</h1>
         <div>
-          <p>{timer}</p>
+          <p>{formatTime()}</p>
           <div>
             {!isActive && !isPaused ? (
               <button onClick={handleStart}>Iniciar</button>
